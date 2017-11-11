@@ -31013,18 +31013,30 @@
 /* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(1);
 
 	var Chat = React.createClass({
-	    displayName: 'Chat',
+	    displayName: "Chat",
 
 	    render: function render() {
 	        return React.createElement(
-	            'h2',
-	            null,
-	            'This is chat component'
+	            "form",
+	            { action: "javascript:void(0)" },
+	            React.createElement(
+	                "div",
+	                { className: "row", id: "chat-display" },
+	                React.createElement("span", null)
+	            ),
+	            React.createElement("input", { ref: "chatMmessage",
+	                className: "form-control",
+	                placeholder: "Type your message.." }),
+	            React.createElement(
+	                "button",
+	                { className: "btn btn-primary" },
+	                "SEND"
+	            )
 	        );
 	    }
 	});
