@@ -4,6 +4,7 @@ var RouteHandler = Router.RouteHandler;
 
 var io = require('socket.io-client');
 var Header = require('./parts/Header');
+var Sidebar = require('./Sidebar'); //checkback this path later!!
 
 var APP = React.createClass({
 
@@ -92,9 +93,20 @@ var APP = React.createClass({
 
     render() {
         return (
-            <div>
-                <Header {...this.state} />
-                <RouteHandler emit={this.emit} {...this.state} />
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12">
+                        <Header {...this.state} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-8">
+                        <RouteHandler emit={this.emit} {...this.state} />
+                    </div>
+                    <div className="col-md-4">
+                        <Sidebar {...this.state} />
+                    </div>
+                </div>      
             </div>
         );
     }
