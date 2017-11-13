@@ -8,6 +8,7 @@ var audience = [];
 var speaker = {};
 var questions = require('./app-questions');
 var currentQuestion = false;
+var chatHistory = [];
 var results = {
 	a: 0,
 	b: 0,
@@ -78,13 +79,20 @@ io.sockets.on('connection', function (socket) {
 		console.log("Answer: '%s' - %j", payload.choice, results);
 	});
 
+	socket.on('chat', function(payload) {
+		chatHistory.push(payload);
+		io.sockets.emit('chat', chatHistory); 
+		console.log("'%s' sent by user '%s':", payload.message, payload.user.name);
+	});
+
 	socket.emit('welcome', {
 		title: title,
 		audience: audience,
 		speaker: speaker.name,
 		questions: questions,
 		currentQuestion: currentQuestion,
-		results: results
+		results: results,
+		chatHistory: chatHistory,
 	});
 
 	connections.push(socket);

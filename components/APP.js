@@ -4,7 +4,7 @@ var RouteHandler = Router.RouteHandler;
 
 var io = require('socket.io-client');
 var Header = require('./parts/Header');
-var Sidebar = require('./Sidebar'); //checkback this path later!!
+var Sidebar = require('./Sidebar');
 
 var APP = React.createClass({
 
@@ -17,7 +17,8 @@ var APP = React.createClass({
             speaker: '',
             questions: [],
             currentQuestion: false,
-            results: {}
+            results: {},
+            chatHistory: []
         }
     },
 
@@ -32,6 +33,7 @@ var APP = React.createClass({
         this.socket.on('end', this.updateState);
         this.socket.on('ask', this.ask);
         this.socket.on('results', this.updateResults);
+        this.socket.on('chat', this.chat);
     },
 
     emit(eventName, payload) {
@@ -57,6 +59,10 @@ var APP = React.createClass({
             title: 'disconnected',
             speaker: '' 
         });
+    },
+
+    chat(data) {
+        this.setState({ chatHistory: data });
     },
 
     updateState(serverState) {
@@ -95,7 +101,7 @@ var APP = React.createClass({
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-8">
                         <Header {...this.state} />
                     </div>
                 </div>
@@ -104,7 +110,7 @@ var APP = React.createClass({
                         <RouteHandler emit={this.emit} {...this.state} />
                     </div>
                     <div className="col-md-4">
-                        <Sidebar {...this.state} />
+                        <Sidebar emit={this.emit} {...this.state} />
                     </div>
                 </div>      
             </div>
