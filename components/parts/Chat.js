@@ -1,5 +1,6 @@
 var React = require('react');
 var Display = require('./Display');
+var ChatForm = require('./ChatForm');
 
 var Chat = React.createClass({
 
@@ -8,25 +9,19 @@ var Chat = React.createClass({
         elem.scrollTop = elem.scrollHeight;
     },
 
-    chat() {
-        var message = React.findDOMNode(this.refs.message).value;
-        var user = this.props.member;
-        this.props.emit('chat', { message: message, user: user }); 
-    },
-
     getChatHistory(msg, i) {
         return (
             <div key={i} className='col-xs-12'>
                 <Display if={msg.message}>
-                    <Display if={msg.user.id === this.props.member.id}>
+                    <Display if={msg.user.name === this.props.member.name}>
                         <span>You: {msg.message}</span>
                     </Display>
 
-                    <Display if={msg.user.id !== this.props.member.id && msg.user.type !== 'speaker'}>
+                    <Display if={msg.user.name !== this.props.member.name && msg.user.type !== 'speaker'}>
                         <span>{msg.user.name}: {msg.message}</span>
                     </Display>
 
-                    <Display if={msg.user.id !== this.props.member.id && msg.user.type === 'speaker'}>
+                    <Display if={msg.user.name !== this.props.member.name && msg.user.type === 'speaker'}>
                         <span>{msg.user.name} [speaker]: {msg.message}</span>
                     </Display>
                 </Display>
@@ -41,15 +36,7 @@ var Chat = React.createClass({
                 <div id='chat-display' className='row'>
                     {this.props.chatHistory.map(this.getChatHistory)}
                 </div>
-
-                <form action="javascript:void(0)" onSubmit={this.chat}>
-
-                    <input ref="message"
-                           className="form-control"
-                           placeholder="Type your message.."
-                           required />
-                    <button className="btn btn-primary">Send</button>
-                </form>
+                <ChatForm emit={this.props.emit} member={this.props.member} />
             </div>
         )
     }
