@@ -32713,6 +32713,11 @@
 	var Chat = React.createClass({
 	    displayName: 'Chat',
 
+	    componentDidUpdate: function componentDidUpdate() {
+	        var elem = document.getElementById('chat-display');
+	        elem.scrollTop = elem.scrollHeight;
+	    },
+
 	    chat: function chat() {
 	        var message = React.findDOMNode(this.refs.message).value;
 	        var user = this.props.member;

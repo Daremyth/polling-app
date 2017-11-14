@@ -3,6 +3,11 @@ var Display = require('./Display');
 
 var Chat = React.createClass({
 
+    componentDidUpdate() {
+        var elem = document.getElementById('chat-display');
+        elem.scrollTop = elem.scrollHeight;
+    },
+
     chat() {
         var message = React.findDOMNode(this.refs.message).value;
         var user = this.props.member;
