@@ -18,8 +18,9 @@ var results = {
 
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
+app.set('port', process.env.PORT || 5000);
 
-var server = app.listen(process.env.PORT || 5000);
+var server = app.listen(app.get('port'));
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
