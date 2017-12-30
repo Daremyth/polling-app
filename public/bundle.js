@@ -23022,7 +23022,7 @@
 	    },
 
 	    componentWillMount: function componentWillMount() {
-	        //this.socket = io('https://protected-chamber-74233.herokuapp.com:5000');
+	        this.socket = io();
 	        this.socket.on('connect', this.connect);
 	        this.socket.on('disconnect', this.disconnect);
 	        this.socket.on('welcome', this.updateState);
