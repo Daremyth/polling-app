@@ -1,8 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
+var webpack = require('webpack');
+var path = require("path");
+var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-	devtool: 'cheap-module-source-map',
+	devtool: 'source-map',
 	entry: "./app-client.js",
 	output: {
 		filename: "public/bundle.js"
@@ -12,7 +13,17 @@ module.exports = {
 		  'process.env': {
 			'NODE_ENV': JSON.stringify('production')
 		  }
-		})
+		}),
+		new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new CompressionPlugin({ 
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
+    })
 	  ],
 	module: {
 		loaders: [

@@ -16,9 +16,11 @@
     "underscore": "^1.8.3",
     "webpack": "^1.10.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "compression-webpack-plugin": "^1.1.6"
+  },
   "scripts": {
-    "prestart": "webpack",
+    "pre--start": "webpack",
     "start": "node app-server.js",
     "build": "NODE_ENV=production webpack --config ./webpack.config.js --progress --colors"
   },
